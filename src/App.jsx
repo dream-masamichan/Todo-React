@@ -18,14 +18,32 @@ function App() {
     })
   }
 
+  function handleAddProject(projectData) {
+    const newProject = {
+      ...projectData,
+      id: Math.random().toString(),
+    }
+
+    setProjectState((prevState) => {
+      return {
+        ...prevState,
+        projects: [...prevState.projects, newProject],
+        selectedProjectId: undefined,
+      }
+    })
+  }
+
+  // 修正ここ！
+  console.log(projectState)
+
   let content
 
   if (projectState.selectedProjectId === null) {
-    content = <NewProject />
+    content = <NewProject onAdd={handleAddProject} />
   } else if (projectState.selectedProjectId === undefined) {
     content = <NoProjectSelected onStartAddProject={handleStartAddProject} />
   } else {
-    content = <p>Project View Here</p> // 任意：選択中プロジェクトの画面など
+    content = <p>Project View Here</p>
   }
 
   return (
